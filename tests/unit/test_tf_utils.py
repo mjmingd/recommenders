@@ -11,7 +11,7 @@ import tensorflow as tf
 
 from reco_utils.common.tf_utils import (
     build_optimizer,
-    evaluation_log_hook,
+    evaluation_log_listener,
     export_model,
     MetricsLogger,
     pandas_input_fn,
@@ -53,12 +53,9 @@ def test_pandas_input_fn(pd_df):
 
     # check dataset
     dataset = pandas_input_fn(df)()
-    batch = dataset.make_one_shot_iterator().get_next()
-    with tf.Session() as sess:
-        features = sess.run(batch)
-        
-        # check the input function returns all the columns
-        assert len(features) == len(df.columns)
+
+    # check the input function returns all the columns
+    assert len(dataset.element_spec) == len(df.columns)
         
         for k, v in features.items():
             assert k in df.columns.values
