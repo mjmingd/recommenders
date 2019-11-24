@@ -53,7 +53,7 @@ steps:
         python scripts/generate_conda_file.py --name reco 
   displayName: 'generate_conda_file.py'
 
-- template: ../tests/ci/env-setup.yml 
+- template: env-setup.yml 
 
 - task: AzureCLI@2
   inputs:
@@ -61,15 +61,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-     python scripts/generate_conda_file.py --name reco 
-  displayName: ' generate_conda_file.py'
-
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
+      source activate reco_base
       python tests/ci/submit_azureml_pytest.py --subid $(subscription_id) --testfolder $(testfolder) --testmarkers $(testmarkers) --clustername $(clustername) --expname $(expname) --dockerproc $(dockerproc) --junitxml $(junitxml) --reponame $(reponame) --branch $(branch)
   displayName: 'submit_azureml_pytest'
 
