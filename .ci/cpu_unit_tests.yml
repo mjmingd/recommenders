@@ -47,7 +47,7 @@ steps:
    az login --service-principal -u $(ClientID) -p $(ClientSecret) --tenant $(TenantID)
   displayName: 'Login to Azure'
 
-- template: env-setup.yml 
+- template: ../tests/ci/env-setup.yml 
 
 - script: 
      python scripts/generate_conda_file.py --name reco 
