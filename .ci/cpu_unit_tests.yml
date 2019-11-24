@@ -23,7 +23,9 @@ variables:
 - name  : 'dockerproc'
   value : 'cpu'
 - name  : 'expname'
-  value : 'cpu_unit_tests'
+  value : 'cpu_unit_tests'  
+- name : subscription_id
+  value: 0ca618d2-22a8-413a-96d0-0f1b531129c3
 
 trigger: none
 
@@ -42,18 +44,33 @@ steps:
     architecture: 'x64'
   displayName: 'Use Python 3.6'
 
-- script: | 
-   az login --service-principal -u $(ClientID) -p $(ClientSecret) --tenant $(TenantID)
-  displayName: 'Login to Azure'
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+        python scripts/generate_conda_file.py --name reco 
+  displayName: 'generate_conda_file.py'
 
 - template: ../tests/ci/env-setup.yml 
 
-- script: 
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
      python scripts/generate_conda_file.py --name reco 
   displayName: ' generate_conda_file.py'
 
-- script: 
-    python tests/ci/submit_azureml_pytest.py --subid $(SubscriptionID) --testfolder $(testfolder) --testmarkers $(testmarkers) --clustername $(clustername) --expname $(expname) --dockerproc $(dockerproc) --junitxml $(junitxml) --reponame $(reponame) --branch $(branch)
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      python tests/ci/submit_azureml_pytest.py --subid $(subscription_id) --testfolder $(testfolder) --testmarkers $(testmarkers) --clustername $(clustername) --expname $(expname) --dockerproc $(dockerproc) --junitxml $(junitxml) --reponame $(reponame) --branch $(branch)
   displayName: 'submit_azureml_pytest'
 
 - task: PublishTestResults@2
