@@ -69,7 +69,7 @@ CONDA_GPU = {
 }
 
 PIP_BASE = {
-    "cmake": "cmake==3.14.0",
+    "cmake": "cmake==3.14.4",
     "azureml-sdk[notebooks,tensorboard]": "azureml-sdk[notebooks,tensorboard]==1.0.18",
     "azure-storage": "azure-storage>=0.36.0",
     "black": "black>=18.6b4",
