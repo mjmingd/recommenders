@@ -50,7 +50,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-        python scripts/generate_conda_file.py --name reco 
+        python scripts/generate_conda_file.py 
   displayName: 'generate_conda_file.py'
 
 - template: steps/env-setup.yml 
