@@ -7,7 +7,7 @@ parameters:
   testmarkers: #"not notebooks and not spark and not gpu"
 
 steps:
-- template: env-setup.yml
+- template: env_setup_steps.yml
 
 - template: test_step.yml
   parameters:

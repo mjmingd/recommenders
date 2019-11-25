@@ -1,6 +1,6 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
-# file: env-setup.yml
+# file: env_setup_steps.yml
 #
 parameters:
   conda_location: '.'
