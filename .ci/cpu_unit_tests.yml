@@ -53,7 +53,7 @@ steps:
         python scripts/generate_conda_file.py --name reco 
   displayName: 'generate_conda_file.py'
 
-- template: env-setup.yml 
+- template: steps/env-setup.yml 
 
 - task: AzureCLI@2
   inputs:
