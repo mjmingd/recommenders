@@ -2,58 +2,34 @@
 # Licensed under the MIT License.
 #
 variables:
-  test: 'tests/ci/run_pytest.py'
-  maxnodes : 4
-  reponame : 'Recommenders'
-  rg       : 'recommender'
-  wsname   : 'RecoWS'
-# CPU
-  vmsize'  : 'STANDARD_D3_V2'
-  dockerproc : 'cpu'
+- name  : 'testmarkers'
+  value : '"not vw and notebooks and not spark and not gpu"'
+- name  : 'clustername'
+  value : 'reco-nightly-cpu'
+- name  : 'expname'
+  value : 'notebooks_unit_cpu'
+- name  : 'subscription_id'
+  value : '0ca618d2-22a8-413a-96d0-0f1b531129c3'
+- name  : 'subscription_name'
+  value : 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
+- name  : "AgentName"
+  value : 'ubuntu-16.04'
 
-trigger: none
-
-pr: none
+trigger:
+- master
 
 jobs:
-- job : notebooks_unit_tests
-  displayName : 'notebooks_unit_tests'
+- job: notebooks_unit_tests
+  displayName : 'Notebooks Unit Tests'
   pool:
-    vmImage: 'ubuntu-16.04'
-
-# vars specific to this job
-  variables:
-  - group: AzureKeyVaultSecrets
-  - name  : 'testfolder'
-    value : './tests/unit'
-  - name  : 'testmarkers'
-    value : '"not vw and notebooks and not spark and not gpu"'
-  - name  : 'junitxml'
-    value : 'reports/test-unit.xml'
-  - name  : 'clustername'
-    value : 'reco-nightly-cpu'
-  - name  : 'expname'
-    value : 'notebooks_unit_cpu'
+    name: $(AgentName)
 
   steps:
-
-  - script: | 
-      az login --service-principal -u $(ClientID) -p $(ClientSecret) --tenant $(TenantID)
-    displayName: 'Login to Azure'
-
-  - template: env-setup.yml # template reference
-
-  - script: 
-      python scripts/generate_conda_file.py --name reco 
-    displayName: ' generate_conda_file.py'
-
-  - script: 
-      python tests/ci/submit_azureml_pytest.py --subid $(SubscriptionID) --testfolder $(testfolder) --testmarkers $(testmarkers) --clustername $(clustername) --expname $(expname) --dockerproc $(dockerproc) --junitxml $(junitxml) --reponame $(reponame) --branch $(Build.SourceBranchName)
-    displayName: 'submit_azureml_pytest'
-
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/test-*.xml'
-    inputs:
-      testResultsFiles: '**/test-*.xml'
-      failTaskOnFailedTests: true
-    condition: succeededOrFailed()
+  - template: steps/cpu_test_steps.yml
+    parameters:
+      testmarkers: $(testmarkers)
+      clustername: $(clustername)
+      expname: $(expname)
+      conda: $(cpu_conda)
+      subscription_id: $(subscription_id)
+      subscription_name: $(subscription_name)

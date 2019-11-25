@@ -4,7 +4,7 @@
 #
 parameters:
   conda_location: '.'
-  conda: reco
+  conda: # reco
 
 steps:
 - task: UsePythonVersion@0
@@ -12,6 +12,10 @@ steps:
     versionSpec: '3.6'
     architecture: 'x64'
   displayName: 'Use Python 3.6'
+
+- bash: |
+    python scripts/generate_conda_file.py --name ${{parameters.conda}}
+  displayName: 'generate_conda_file.py'
 
 - bash: |
     echo "##vso[task.prependpath]$CONDA/bin"

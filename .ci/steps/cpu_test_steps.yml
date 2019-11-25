@@ -1,0 +1,57 @@
+parameters:
+- name  : 'test'
+  value : 'tests/ci/run_pytest.py'
+- name  : 'testfolder'
+  value : './tests/unit'
+- name  : 'junitxml'
+  value : 'reports/test-unit.xml'
+- name  : 'maxnodes'
+  value : 4
+- name  : 'reponame'
+  value : 'Recommenders'
+- name  : 'clustername'
+  value : 'reco-cpu-test2'
+- name  : 'vmsize'
+  value : 'STANDARD_D3_V2'
+- name  : 'dockerproc7'
+  value : 'cpu'
+- name  : 'expname'
+  value : 'cpu_unit_tests'  
+- name  : 'subscription_id'
+  value : '0ca618d2-22a8-413a-96d0-0f1b531129c3'
+- name  : 'subscription_name'
+  value : 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3}}'
+- name  : "cpu_conda"
+  value : "reco"
+- name  : 'testmarkers'
+  value : #"not notebooks and not spark and not gpu"
+
+steps:
+- template: env-setup.yml
+  parameters:
+    conda: ${{parameters.cpu_conda}}
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: ${{parameters.subscription_name}}
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      source activate reco
+      python tests/ci/submit_azureml_pytest.py --subid ${{parameters.SubscriptionID}} \
+        --testfolder ${{parameters.testfolder}} \
+        --testmarkers ${{parameters.testmarkers}} \
+        --clustername ${{parameters.clustername}} \
+        --expname ${{parameters.expname}} \
+        --dockerproc ${{parameters.dockerproc}} \
+        --junitxml ${{parameters.junitxml}} \
+        --reponame ${{parameters.reponame}} \
+        --branch ${{parameters.Build.SourceBranchName}}
+  displayName: 'submit_azureml_pytest'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results **/test-*.xml'
+  inputs:
+    testResultsFiles: '**/test-*.xml'
+    failTaskOnFailedTests: true
+  condition: succeededOrFailed(}}
