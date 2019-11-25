@@ -18,7 +18,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      source activate ${{parameters.conda}}
+#      source activate ${{parameters.conda}}
       python tests/ci/submit_azureml_pytest.py --subid ${{parameters.subscription_id}} \
         --testfolder ${{parameters.testfolder}} \
         --testmarkers ${{parameters.testmarkers}} \
@@ -28,6 +28,7 @@ steps:
         --junitxml ${{parameters.junitxml}} \
         --reponame ${{parameters.reponame}} \
         --branch ${{parameters.branch}}
+
   displayName: 'submit_azureml_pytest'
 
 - task: PublishTestResults@2
