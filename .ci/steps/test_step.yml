@@ -37,4 +37,5 @@ steps:
   inputs:
     testResultsFiles: '**/test-*.xml'
     failTaskOnFailedTests: true
-  condition: succeededOrFailed(}}
+  condition: succeededOrFailed()
+
