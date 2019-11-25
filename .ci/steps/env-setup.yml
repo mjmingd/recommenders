@@ -21,7 +21,7 @@ steps:
 - bash: |
     conda env create -f ${{parameters.conda_location}}/environment.yml --force
     source activate ${{parameters.conda}}
-  failOnStandardError: True
+  failOnStderr: True
     
 - bash: |
     source activate ${{parameters.conda}}
@@ -29,3 +29,4 @@ steps:
     pip install azureml-sdk &&
     pip install azure-cli 
   displayName: 'install azureml-sdk'
+  failOnStderr: True
