@@ -4,9 +4,7 @@
 #
 parameters:
   conda_location: '.'#
-  azureSubscription: #
-  conda: #
-
+  conda: reco_base
 
 steps:
 - task: UsePythonVersion@0
