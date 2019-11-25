@@ -9,9 +9,7 @@ parameters:
   clustername: #
   expname: #
   dockerproc: #
-
-
-
+  branch: "dciborow/cicd-refactor"
 
 steps:
 - task: AzureCLI@2
@@ -29,7 +27,7 @@ steps:
         --dockerproc ${{parameters.dockerproc}} \
         --junitxml ${{parameters.junitxml}} \
         --reponame ${{parameters.reponame}} \
-        --branch ${{parameters.Build.SourceBranchName}}
+        --branch ${{parameters.branch}}
   displayName: 'submit_azureml_pytest'
 
 - task: PublishTestResults@2
