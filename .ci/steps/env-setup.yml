@@ -4,7 +4,7 @@
 #
 parameters:
   conda_location: '.'
-  conda: # reco
+  conda: reco
 
 steps:
 - task: UsePythonVersion@0

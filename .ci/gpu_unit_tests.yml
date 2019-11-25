@@ -2,9 +2,9 @@
 # Licensed under the MIT License.
 #
 variables:
-  testmarkers: "not vw and notebooks and not spark and not gpu"
-  clustername: 'reco-nightly-cpu'
-  expname: 'notebooks_unit_cpu'
+  testmarkers: '"not notebooks and not spark and gpu"'
+  clustername: 'Reco-gpu-test'
+  expname: 'gpu_unit_tests'
   subscription_id: '0ca618d2-22a8-413a-96d0-0f1b531129c3'
   subscription_name: 'AG-AzureCAT-AIDevOps-Test-COGSNonProd-IO1685734(0ca618d2-22a8-413a-96d0-0f1b531129c3)'
   AgentName: 'ubuntu-16.04'
@@ -13,13 +13,13 @@ trigger:
 - master
 
 jobs:
-- job: notebooks_unit_tests
-  displayName : 'Notebooks Unit Tests'
+- job: notebook_gpu_tests
+  displayName : 'GPU Unit Tests'
   pool:
     name: $(AgentName)
 
   steps:
-  - template: steps/cpu_test_steps.yml
+  - template: steps/gpu_test_steps.yml
     parameters:
       testmarkers: $(testmarkers)
       clustername: $(clustername)
