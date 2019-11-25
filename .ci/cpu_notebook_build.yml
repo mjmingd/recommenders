@@ -24,6 +24,5 @@ jobs:
       testmarkers: $(testmarkers)
       clustername: $(clustername)
       expname: $(expname)
-      conda: $(cpu_conda)
       subscription_id: $(subscription_id)
       subscription_name: $(subscription_name)
