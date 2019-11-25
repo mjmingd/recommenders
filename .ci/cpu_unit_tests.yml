@@ -50,7 +50,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-        python scripts/generate_conda_file.py 
+        python scripts/generate_conda_file.py --name reco
   displayName: 'generate_conda_file.py'
 
 - template: steps/env-setup.yml 
@@ -61,7 +61,7 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      source activate reco_base
+      source activate reco
       python tests/ci/submit_azureml_pytest.py --subid $(subscription_id) --testfolder $(testfolder) --testmarkers $(testmarkers) --clustername $(clustername) --expname $(expname) --dockerproc $(dockerproc) --junitxml $(junitxml) --reponame $(reponame) --branch $(branch)
   displayName: 'submit_azureml_pytest'
 
