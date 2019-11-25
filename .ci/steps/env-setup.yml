@@ -21,7 +21,7 @@ steps:
 - bash: |
       conda env create -f ${{parameters.conda_location}}/environment.yml --force
       source activate ${{parameters.conda}}
-    failOnStandardError: True
+  failOnStandardError: True
     
 - bash: |
     source activate ${{parameters.conda}}
