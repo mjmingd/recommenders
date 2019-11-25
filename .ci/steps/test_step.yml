@@ -2,7 +2,6 @@ parameters:
   testfolder: './tests/unit'
   junitxml: 'reports/test-unit.xml'
   reponame: Recommenders
-  conda: reco
   subscription_name: #
   subscription_id: #
   testmarkers: #

@@ -21,12 +21,6 @@ steps:
     echo "##vso[task.prependpath]$CONDA/bin"
   displayName: 'Configure Conda'
 
-#- bash: |
-#    conda env create -f ${{parameters.conda}}.yaml --force
-#    source activate ${{parameters.conda}}
-#  failOnStderr: True
-#  displayName: 'Create Conda Env'
-
 - bash: |
     pip install paramiko==2.4.2 &&
     pip install azureml-sdk &&
