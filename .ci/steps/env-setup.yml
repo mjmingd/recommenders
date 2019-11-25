@@ -1,10 +1,9 @@
-  displayName: 'Configure Conda'
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 # file: env-setup.yml
 #
 parameters:
-  conda_location: '.'#
+  conda_location: '.'
   conda: reco_base
 
 steps:
