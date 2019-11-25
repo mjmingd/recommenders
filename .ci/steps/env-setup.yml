@@ -19,8 +19,8 @@ steps:
     echo "##vso[task.prependpath]$CONDA/bin"
   
 - bash: |
-      conda env create -f ${{parameters.conda_location}}/environment.yml --force
-      source activate ${{parameters.conda}}
+    conda env create -f ${{parameters.conda_location}}/environment.yml --force
+    source activate ${{parameters.conda}}
   failOnStandardError: True
     
 - bash: |
