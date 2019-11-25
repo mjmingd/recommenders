@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 #
 variables:
-  testmarkers: "not vw and notebooks and not spark and not gpu"
+  testmarkers: '"not vw and notebooks and not spark and not gpu"'
   clustername: 'reco-nightly-cpu'
   expname: 'notebooks_unit_cpu'
   subscription_id: '0ca618d2-22a8-413a-96d0-0f1b531129c3'
