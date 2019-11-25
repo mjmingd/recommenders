@@ -17,7 +17,7 @@ steps:
     echo "##vso[task.prependpath]$CONDA/bin"
   
 - bash: |
-    conda env create -f reco_base.yaml --force
+    conda env create -f ${{parameters.conda}}.yaml --force
     source activate ${{parameters.conda}}
   failOnStderr: True
     
