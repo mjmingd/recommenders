@@ -18,7 +18,6 @@ steps:
     scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
-#      source activate ${{parameters.conda}}
       python tests/ci/submit_azureml_pytest.py --subid ${{parameters.subscription_id}} \
         --testfolder ${{parameters.testfolder}} \
         --testmarkers ${{parameters.testmarkers}} \
